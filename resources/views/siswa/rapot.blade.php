@@ -1,0 +1,113 @@
+@extends('template_backend.home') 
+@section('heading', 'Nilai Rapot')
+@section('page')
+  <li class="breadcrumb-item active">Nilai Rapot</li>
+@endsection
+@section('content')
+<div class="col-md-12">
+    <div class="card card-primary">
+      <div class="card-header">
+        <h3 class="card-title">Nilai Rapot Siswa</h3>
+      </div>
+      @csrf
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-12">
+                <table class="table" style="margin-top: -10px;">
+                    <tr><td>No Induk Siswa</td><td>:</td><td>{{ Auth::user()->no_induk }}</td></tr>
+                    <tr><td>Nama Siswa</td><td>:</td><td class="text-capitalize">{{ Auth::user()->name }}</td></tr>
+                    <tr><td>Nama Kelas</td><td>:</td><td>{{ $kelas->nama_kelas }}</td></tr>
+                    <tr><td>Wali Kelas</td><td>:</td><td>{{ optional($kelas->guru)->nama_guru ?? '-' }}</td></tr>
+                    <tr><td>Semester</td><td>:</td><td>{{ date('m') > 6 ? 'Semester Ganjil' : 'Semester Genap' }}</td></tr>
+                    <tr><td>Tahun Pelajaran</td><td>:</td><td>{{ date('m') > 6 ? date('Y').'/'.(date('Y')+1) : (date('Y')-1).'/'.date('Y') }}</td></tr>
+                </table>
+                <hr>
+            </div>
+            <div class="col-md-12">
+                <h4 class="mb-3">A. Sikap</h4>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Mata Pelajaran</th>
+                            <th>Nilai Sikap</th>
+                            <th>Deskripsi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($sikapData as $mapelId => $sikapList)
+                        @php 
+                            $sikap = $sikapList->avg('sikap_1'); 
+                            $mapel = optional($sikapList->first()->mapel);
+                        @endphp
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $mapel->nama_mapel ?? 'Unknown' }}</td>
+                            <td class="ctr">{{ number_format($sikap, 2) }}</td>
+                            <td>
+                                @if ($sikap >= 90) Sangat Baik
+                                @elseif ($sikap >= 80) Baik
+                                @elseif ($sikap >= 70) Cukup
+                                @else Kurang
+                                @endif
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="4" class="text-center">Data sikap belum tersedia</td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+                
+                <h4 class="mb-3">B. Pengetahuan dan Keterampilan</h4>
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th rowspan="2">No.</th>
+                            <th rowspan="2">Mata Pelajaran</th>
+                            <th rowspan="2">KKM</th>
+                            <th class="ctr" colspan="3">Pengetahuan</th>
+                            <th class="ctr" colspan="3">Keterampilan</th>
+                        </tr>
+                        <tr>
+                            <th class="ctr">Nilai</th>
+                            <th class="ctr">Predikat</th>
+                            <th class="ctr">Deskripsi</th>
+                            <th class="ctr">Nilai</th>
+                            <th class="ctr">Predikat</th>
+                            <th class="ctr">Deskripsi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($mapelList as $mapel)
+                            @php 
+                                $rapot = $mapel->rapot->where('siswa_id', Auth::user()->id)->first(); 
+                            @endphp                    
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $mapel->nama_mapel }}</td>
+                                <td class="ctr">{{ $rapot->kkm ?? '-' }}</td>
+                                <td class="ctr">{{ $rapot->p_nilai ?? '-' }}</td>
+                                <td class="ctr">{{ $rapot->p_predikat ?? '-' }}</td>
+                                <td class="ctr">{{ $rapot->p_deskripsi ?? '-' }}</td>
+                                <td class="ctr">{{ $rapot->k_nilai ?? '-' }}</td>
+                                <td class="ctr">{{ $rapot->k_predikat ?? '-' }}</td>
+                                <td class="ctr">{{ $rapot->k_deskripsi ?? '-' }}</td>
+                            </tr>
+                        @empty
+                        <tr>
+                            <td colspan="9" class="text-center">Data nilai belum tersedia</td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+@endsection
+@section('script')
+    <script> $("#RapotSiswa").addClass("active"); </script>
+@endsection
