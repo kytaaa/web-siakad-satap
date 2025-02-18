@@ -23,7 +23,7 @@
                 </table>
                 <hr>
             </div>
-            <div class="col-md-12">
+            {{-- <div class="col-md-12">
                 <h4 class="mb-3">A. Sikap</h4>
                 <table class="table table-bordered table-striped">
                     <thead>
@@ -58,7 +58,7 @@
                         </tr>
                         @endforelse
                     </tbody>
-                </table>
+                </table> --}}
                 
                 <h4 class="mb-3">B. Pengetahuan dan Keterampilan</h4>
                 <table class="table table-bordered table-striped table-hover">

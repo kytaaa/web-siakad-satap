@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use App\Mapel;
 use App\Guru;
 use App\Siswa;
@@ -31,39 +32,41 @@ class SikapController extends Controller
 
     public function store(Request $request)
     {
+        // 🔍 Debug: Cek data request masuk di log
+        Log::info('Request Data:', $request->all());
         $request->validate([
-            'guru_id' => 'required|exists:guru,id',
-            'kelas_id' => 'required|exists:kelas,id',
             'siswa_id' => 'required|array',
+            'siswa_id.*' => 'exists:siswa,id',
             'sikap_1' => 'nullable|array',
             'sikap_2' => 'nullable|array',
             'sikap_3' => 'nullable|array'
         ]);
+        
 
         $guru = Guru::findOrFail($request->guru_id);
         $cekJadwal = Jadwal::where('guru_id', $guru->id)->where('kelas_id', $request->kelas_id)->exists();
 
-        if ($cekJadwal) {
-            foreach ($request->siswa_id as $index => $siswaId) {
-                Sikap::updateOrCreate(
-                    [
-                        'siswa_id' => $siswaId, 
-                        'kelas_id' => $request->kelas_id, 
-                        'guru_id' => $request->guru_id,
-                        'mapel_id' => $guru->mapel_id
-                    ],
-                    [
-                        'sikap_1' => $request->sikap_1[$index] ?? null,
-                        'sikap_2' => $request->sikap_2[$index] ?? null,
-                        'sikap_3' => $request->sikap_3[$index] ?? null
-                    ]
-                );
-            }
-
-            return response()->json(['success' => 'Nilai sikap siswa berhasil ditambahkan!']);
-        } else {
-            return response()->json(['error' => 'Maaf, guru ini tidak mengajar kelas ini!']);
+        if (!$cekJadwal) {
+            return response()->json(['error' => 'Maaf, guru ini tidak mengajar kelas ini!'], 422);
         }
+
+        foreach ($request->siswa_id as $index => $siswaId) {
+            Sikap::updateOrCreate(
+                [
+                    'siswa_id' => $siswaId,
+                    'kelas_id' => $request->kelas_id,
+                    'guru_id' => $request->guru_id,
+                    'mapel_id' => $guru->mapel_id
+                ],
+                [
+                    'sikap_1' => $request->sikap_1[$index] ?? null,
+                    'sikap_2' => $request->sikap_2[$index] ?? null,
+                    'sikap_3' => $request->sikap_3[$index] ?? null
+                ]
+            );
+        }
+
+        return response()->json(['success' => 'Nilai sikap siswa berhasil ditambahkan!']);
     }
 
     public function show($id)

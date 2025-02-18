@@ -153,12 +153,12 @@
                                     <p>Nilai Ulangan</p>
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a href="{{ route('sikap-kelas') }}" class="nav-link" id="Sikap">
                                     <i class="fas fa-file-alt nav-icon"></i>
                                     <p>Nilai Sikap</p>
                                 </a>
-                            </li>
+                            </li> --}}
                             <li class="nav-item">
                                 <a href="{{ route('rapot-kelas') }}" class="nav-link" id="Rapot">
                                     <i class="fas fa-file-alt nav-icon"></i>
@@ -213,7 +213,7 @@
                                     <p>Entry Nilai Ulangan</p>
                                 </a>
                             </li>
-                            @if (Auth::user()->role == 'Guru')
+                            {{-- @if (Auth::user()->role == 'Guru')
                                 <li class="nav-item">
                                     <a href="{{ route('sikap.index') }}" class="nav-link" id="SikapGuru">
                                         <i class="fas fa-file-alt nav-icon"></i>
@@ -221,7 +221,7 @@
                                     </a>
                                 </li>
                             @else
-                            @endif
+                            @endif --}}
                             <li class="nav-item">
                                 <a href="{{ route('rapot.index') }}" class="nav-link" id="RapotGuru">
                                     <i class="fas fa-file-alt nav-icon"></i>
@@ -255,12 +255,12 @@
                             <p>Ulangan</p>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a href="{{ route('sikap.siswa') }}" class="nav-link" id="SikapSiswa">
                             <i class="fas fa-file-alt nav-icon"></i>
                             <p>Sikap</p>
                         </a>
-                    </li>
+                    </li> --}}
                     <li class="nav-item">
                         <a href="{{ route('rapot.siswa') }}" class="nav-link" id="RapotSiswa">
                             <i class="fas fa-file-alt nav-icon"></i>

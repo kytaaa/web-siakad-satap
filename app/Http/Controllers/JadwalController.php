@@ -91,6 +91,7 @@ class JadwalController extends Controller
         $id = Crypt::decrypt($id);
         $kelas = Kelas::findorfail($id);
         $jadwal = Jadwal::OrderBy('hari_id', 'asc')->OrderBy('jam_mulai', 'asc')->where('kelas_id', $id)->get();
+
         return view('admin.jadwal.show', compact('jadwal', 'kelas'));
     }
 

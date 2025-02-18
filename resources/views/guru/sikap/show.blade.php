@@ -56,33 +56,33 @@
                                 <input type="hidden" name="siswa_id[]" value="{{ $data->id }}">
                                 <td class="ctr">
                                     <select name="sikap_1[]" class="form-control">
-                                        <option value="A" {{ $sikapTerbaru->sikap_1 == 'A' ? 'selected' : '' }}>A</option>
-                                        <option value="B" {{ $sikapTerbaru->sikap_1 == 'B' ? 'selected' : '' }}>B</option>
-                                        <option value="C" {{ $sikapTerbaru->sikap_1 == 'C' ? 'selected' : '' }}>C</option>
-                                        <option value="D" {{ $sikapTerbaru->sikap_1 == 'D' ? 'selected' : '' }}>D</option>
-                                        <option value="E" {{ $sikapTerbaru->sikap_1 == 'E' ? 'selected' : '' }}>E</option>
+                                        <option value="A" {{ optional($sikapTerbaru)->sikap_1 == 'A' ? 'selected' : '' }}>A</option>
+                                        <option value="B" {{ optional($sikapTerbaru)->sikap_1 == 'B' ? 'selected' : '' }}>B</option>
+                                        <option value="C" {{ optional($sikapTerbaru)->sikap_1 == 'C' ? 'selected' : '' }}>C</option>
+                                        <option value="D" {{ optional($sikapTerbaru)->sikap_1 == 'D' ? 'selected' : '' }}>D</option>
+                                        <option value="E" {{ optional($sikapTerbaru)->sikap_1 == 'E' ? 'selected' : '' }}>E</option>
                                     </select>
                                 </td>
                                 <td class="ctr">
                                     <select name="sikap_2[]" class="form-control">
-                                        <option value="A" {{ $sikapTerbaru->sikap_2 == 'A' ? 'selected' : '' }}>A</option>
-                                        <option value="B" {{ $sikapTerbaru->sikap_2 == 'B' ? 'selected' : '' }}>B</option>
-                                        <option value="C" {{ $sikapTerbaru->sikap_2 == 'C' ? 'selected' : '' }}>C</option>
-                                        <option value="D" {{ $sikapTerbaru->sikap_2 == 'D' ? 'selected' : '' }}>D</option>
-                                        <option value="E" {{ $sikapTerbaru->sikap_2 == 'E' ? 'selected' : '' }}>E</option>
+                                        <option value="A" {{ optional($sikapTerbaru)->sikap_2 == 'A' ? 'selected' : '' }}>A</option>
+                                        <option value="B" {{ optional($sikapTerbaru)->sikap_2 == 'B' ? 'selected' : '' }}>B</option>
+                                        <option value="C" {{ optional($sikapTerbaru)->sikap_2 == 'C' ? 'selected' : '' }}>C</option>
+                                        <option value="D" {{ optional($sikapTerbaru)->sikap_2 == 'D' ? 'selected' : '' }}>D</option>
+                                        <option value="E" {{ optional($sikapTerbaru)->sikap_2 == 'E' ? 'selected' : '' }}>E</option>
                                     </select>
                                 </td>
                                 <td class="ctr">
                                     <select name="sikap_3[]" class="form-control">
-                                        <option value="A" {{ $sikapTerbaru->sikap_3 == 'A' ? 'selected' : '' }}>A</option>
-                                        <option value="B" {{ $sikapTerbaru->sikap_3 == 'B' ? 'selected' : '' }}>B</option>
-                                        <option value="C" {{ $sikapTerbaru->sikap_3 == 'C' ? 'selected' : '' }}>C</option>
-                                        <option value="D" {{ $sikapTerbaru->sikap_3 == 'D' ? 'selected' : '' }}>D</option>
-                                        <option value="E" {{ $sikapTerbaru->sikap_3 == 'E' ? 'selected' : '' }}>E</option>
+                                        <option value="A" {{ optional($sikapTerbaru)->sikap_3 == 'A' ? 'selected' : '' }}>A</option>
+                                        <option value="B" {{ optional($sikapTerbaru)->sikap_3 == 'B' ? 'selected' : '' }}>B</option>
+                                        <option value="C" {{ optional($sikapTerbaru)->sikap_3 == 'C' ? 'selected' : '' }}>C</option>
+                                        <option value="D" {{ optional($sikapTerbaru)->sikap_3 == 'D' ? 'selected' : '' }}>D</option>
+                                        <option value="E" {{ optional($sikapTerbaru)->sikap_3 == 'E' ? 'selected' : '' }}>E</option>
                                     </select>
                                 </td>
                                 <td class="ctr">
-                                    <button type="button" class="btn btn-success btn-save" data-id="{{ $data->id }}">
+                                    <button type="button" class="btn btn-success btn-save">
                                         <i class="fas fa-save"></i>
                                     </button>
                                 </td>
@@ -100,47 +100,35 @@
 
 @section('script')
 <script>
-    $(document).ready(function() {
-        $('.btn-save').click(function() {
-            let row = $(this).closest('tr');
-            let siswa_id = row.find('input[name="siswa_id[]"]').val();
-            let sikap_1 = row.find('select[name="sikap_1[]"]').val();
-            let sikap_2 = row.find('select[name="sikap_2[]"]').val();
-            let sikap_3 = row.find('select[name="sikap_3[]"]').val();
-            let guru_id = $('input[name="guru_id"]').val();
-            let kelas_id = $('input[name="kelas_id"]').val();
+$(document).ready(function() {
+    $('.btn-save').click(function() {
+    let siswa_id = $('input[name="siswa_id[]"]').map(function() { return $(this).val(); }).get();
+    let sikap_1 = $('select[name="sikap_1[]"]').map(function() { return $(this).val(); }).get();
+    let sikap_2 = $('select[name="sikap_2[]"]').map(function() { return $(this).val(); }).get();
+    let sikap_3 = $('select[name="sikap_3[]"]').map(function() { return $(this).val(); }).get();
 
-            $.ajax({
-                url: "{{ route('sikap.store') }}",
-                type: "POST",
-                dataType: 'json',
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    siswa_id: siswa_id,
-                    kelas_id: kelas_id,
-                    guru_id: guru_id,
-                    sikap_1: sikap_1,
-                    sikap_2: sikap_2,
-                    sikap_3: sikap_3
-                },
-                beforeSend: function() {
-                    row.find('.btn-save').html('<i class="fas fa-spinner fa-spin"></i>');
-                },
-                success: function(response) {
-                    toastr.success("Nilai sikap siswa berhasil disimpan!");
-                    row.find('.btn-save').html('<i class="fas fa-check"></i>').prop('disabled', true);
-                },
-                error: function(xhr) {
-                    let errorMsg = xhr.responseJSON?.error || "Terjadi kesalahan!";
-                    toastr.error(errorMsg);
-                    row.find('.btn-save').html('<i class="fas fa-save"></i>');
-                }
-            });
-        });
+    console.log({
+        _token: '{{ csrf_token() }}',
+        siswa_id: siswa_id,
+        sikap_1: sikap_1,
+        sikap_2: sikap_2,
+        sikap_3: sikap_3
     });
 
-    $("#NilaiGuru").addClass("active");
-    $("#liNilaiGuru").addClass("menu-open");
-    $("#SikapGuru").addClass("active");
+    $.post("{{ route('sikap.store') }}", {
+        _token: '{{ csrf_token() }}',
+        siswa_id: siswa_id,
+        sikap_1: sikap_1,
+        sikap_2: sikap_2,
+        sikap_3: sikap_3
+    }).done(function() {
+        toastr.success("Nilai sikap siswa berhasil disimpan!");
+    }).fail(function(xhr) {
+        console.error(xhr.responseText);
+        toastr.error("Terjadi kesalahan saat menyimpan!");
+    });
+});
+
+});
 </script>
 @endsection
