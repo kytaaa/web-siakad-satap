@@ -8,7 +8,6 @@ use App\Mapel;
 use App\Rapot;
 use App\Siswa;
 use App\Jadwal;
-use App\Sikap;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
@@ -161,9 +160,9 @@ class RapotController extends Controller
             return back()->with('error', 'Tidak ada mata pelajaran yang ditemukan.');
         }
     
-        $sikapData = Sikap::where('siswa_id', $siswa->id)->get()->groupBy('mapel_id');
+        // $sikapData = Sikap::where('siswa_id', $siswa->id)->get()->groupBy('mapel_id');
         $rapotData = Rapot::where('siswa_id', $siswa->id)->get()->groupBy('mapel_id');
     
-        return view('siswa.rapot', compact('siswa', 'kelas', 'mapelList', 'sikapData', 'rapotData'));
+        return view('siswa.rapot', compact('siswa', 'kelas', 'mapelList','rapotData'));
     }
 }

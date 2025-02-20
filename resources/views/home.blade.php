@@ -144,7 +144,7 @@
           m = (m < 10) ? "0" + m : m;
           var jam = h + ":" + m;
           
-          if (hari == '0' || hari == '6') {
+          if (hari == '0' || hari == '7') {
             $("#data-jadwal").html(
               `<tr>
                 <td colspan='5' style='background:#fff;text-align:center;font-weight:bold;font-size:18px;'>Sekolah Libur!</td>

@@ -1,5 +1,4 @@
 <?php
-
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
@@ -19,30 +18,36 @@ class Siswa extends Model
     // Relasi ke tabel 'kelas'
     public function kelas()
     {
-        return $this->belongsTo('App\Kelas')->withDefault();
+        return $this->belongsTo(Kelas::class)->withDefault();
     }
 
     // Relasi ke tabel 'ulangan'
     public function ulangan()
     {
-        return $this->hasOne('App\Ulangan', 'siswa_id');
+        return $this->hasOne(Ulangan::class, 'siswa_id');
     }
 
     // Relasi ke tabel 'sikap' (banyak data)
     public function sikap()
     {
-        return $this->hasMany('App\Sikap', 'siswa_id');
+        return $this->hasMany(Sikap::class, 'siswa_id');
     }
 
     // Relasi ke tabel 'rapot'
-    public function nilai()
+    public function rapot()
     {
-        return $this->hasOne('App\Rapot', 'siswa_id');
+        return $this->hasMany(Rapot::class, 'siswa_id');
+    }
+
+    // Relasi ke tabel 'mapel' melalui tabel 'rapot'
+    public function mapel()
+    {
+        return $this->hasManyThrough(Mapel::class, Rapot::class, 'siswa_id', 'id', 'id', 'mapel_id');
     }
 
     // Fungsi untuk mengambil sikap terbaru
     public function sikapTerbaru()
     {
-        return $this->hasOne('App\Sikap', 'siswa_id')->latest();
+        return $this->hasOne(Sikap::class, 'siswa_id')->latest();
     }
 }

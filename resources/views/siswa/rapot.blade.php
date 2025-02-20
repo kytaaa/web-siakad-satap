@@ -80,26 +80,22 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($mapelList as $mapel)
-                            @php 
-                                $rapot = $mapel->rapot->where('siswa_id', Auth::user()->id)->first(); 
-                            @endphp                    
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $mapel->nama_mapel }}</td>
-                                <td class="ctr">{{ $rapot->kkm ?? '-' }}</td>
-                                <td class="ctr">{{ $rapot->p_nilai ?? '-' }}</td>
-                                <td class="ctr">{{ $rapot->p_predikat ?? '-' }}</td>
-                                <td class="ctr">{{ $rapot->p_deskripsi ?? '-' }}</td>
-                                <td class="ctr">{{ $rapot->k_nilai ?? '-' }}</td>
-                                <td class="ctr">{{ $rapot->k_predikat ?? '-' }}</td>
-                                <td class="ctr">{{ $rapot->k_deskripsi ?? '-' }}</td>
-                            </tr>
-                        @empty
+                        @foreach ($mapelList as $mapel)
+                        @php
+                            $rapot = $rapotData[$mapel->id][0] ?? null;
+                        @endphp
                         <tr>
-                            <td colspan="9" class="text-center">Data nilai belum tersedia</td>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $mapel->nama_mapel }}</td>
+                            <td>{{ optional($rapot)->p_nilai ?? '-' }}</td>
+                            <td>{{ optional($rapot)->p_predikat ?? '-' }}</td>
+                            <td>{{ optional($rapot)->p_deskripsi ?? '-' }}</td>
+                            <td>{{ optional($rapot)->k_nilai ?? '-' }}</td>
+                            <td>{{ optional($rapot)->k_predikat ?? '-' }}</td>
+                            <td>{{ optional($rapot)->k_deskripsi ?? '-' }}</td>
                         </tr>
-                        @endforelse
+                    @endforeach
+                    
                     </tbody>
                 </table>
             </div>

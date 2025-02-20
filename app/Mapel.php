@@ -16,12 +16,12 @@ class Mapel extends Model
         return $this->belongsTo('App\Paket')->withDefault();
     }
 
-    public function sikap($id)
-    {
-        $siswa = Siswa::where('no_induk', Auth::user()->no_induk)->first();
-        $nilai = Sikap::where('siswa_id', $siswa->id)->where('mapel_id', $id)->first();
-        return $nilai;
-    }
+    // public function sikap($id)
+    // {
+    //     $siswa = Siswa::where('no_induk', Auth::user()->no_induk)->first();
+    //     $nilai = Sikap::where('siswa_id', $siswa->id)->where('mapel_id', $id)->first();
+    //     return $nilai;
+    // }
 
     public function cekSikap($id)
     {
@@ -37,6 +37,14 @@ class Mapel extends Model
     public function predikat()
 {
     return $this->hasOne('App\Predikat', 'mapel_id');
+}
+public function siswa()
+{
+    return $this->hasManyThrough(Siswa::class, Rapot::class, 'mapel_id', 'id', 'id', 'siswa_id');
+}
+public function nilai()
+{
+    return $this->hasOne(Nilai::class, 'mapel_id', 'id');
 }
 
     protected $table = 'mapel';
