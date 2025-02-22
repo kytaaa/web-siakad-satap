@@ -23,87 +23,51 @@
                 </table>
                 <hr>
             </div>
-            {{-- <div class="col-md-12">
-                <h4 class="mb-3">A. Sikap</h4>
-                <table class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th>No.</th>
-                            <th>Mata Pelajaran</th>
-                            <th>Nilai Sikap</th>
-                            <th>Deskripsi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse ($sikapData as $mapelId => $sikapList)
-                        @php 
-                            $sikap = $sikapList->avg('sikap_1'); 
-                            $mapel = optional($sikapList->first()->mapel);
-                        @endphp
-                        <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $mapel->nama_mapel ?? 'Unknown' }}</td>
-                            <td class="ctr">{{ number_format($sikap, 2) }}</td>
-                            <td>
-                                @if ($sikap >= 90) Sangat Baik
-                                @elseif ($sikap >= 80) Baik
-                                @elseif ($sikap >= 70) Cukup
-                                @else Kurang
-                                @endif
-                            </td>
-                        </tr>
-                        @empty
-                        <tr>
-                            <td colspan="4" class="text-center">Data sikap belum tersedia</td>
-                        </tr>
-                        @endforelse
-                    </tbody>
-                </table> --}}
-                
-                <h4 class="mb-3">B. Pengetahuan dan Keterampilan</h4>
-                <table class="table table-bordered table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th rowspan="2">No.</th>
-                            <th rowspan="2">Mata Pelajaran</th>
-                            <th rowspan="2">KKM</th>
-                            <th class="ctr" colspan="3">Pengetahuan</th>
-                            <th class="ctr" colspan="3">Keterampilan</th>
-                        </tr>
-                        <tr>
-                            <th class="ctr">Nilai</th>
-                            <th class="ctr">Predikat</th>
-                            <th class="ctr">Deskripsi</th>
-                            <th class="ctr">Nilai</th>
-                            <th class="ctr">Predikat</th>
-                            <th class="ctr">Deskripsi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($mapelList as $mapel)
-                        @php
-                            $rapot = $rapotData[$mapel->id][0] ?? null;
-                        @endphp
-                        <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $mapel->nama_mapel }}</td>
-                            <td>{{ optional($rapot)->p_nilai ?? '-' }}</td>
-                            <td>{{ optional($rapot)->p_predikat ?? '-' }}</td>
-                            <td>{{ optional($rapot)->p_deskripsi ?? '-' }}</td>
-                            <td>{{ optional($rapot)->k_nilai ?? '-' }}</td>
-                            <td>{{ optional($rapot)->k_predikat ?? '-' }}</td>
-                            <td>{{ optional($rapot)->k_deskripsi ?? '-' }}</td>
-                        </tr>
+
+            <h4 class="mb-3">B. Pengetahuan dan Keterampilan</h4>
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th rowspan="2">No.</th>
+                        <th rowspan="2">Mata Pelajaran</th>
+                        <th rowspan="2">KKM</th>
+                        <th class="ctr" colspan="3">Pengetahuan</th>
+                        <th class="ctr" colspan="3">Keterampilan</th>
+                    </tr>
+                    <tr>
+                        <th class="ctr">Nilai</th>
+                        <th class="ctr">Predikat</th>
+                        <th class="ctr">Deskripsi</th>
+                        <th class="ctr">Nilai</th>
+                        <th class="ctr">Predikat</th>
+                        <th class="ctr">Deskripsi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($mapelList as $mapel)
+                    @php
+                    $rapot = $rapotData[$mapel->id][0] ?? null;
+                @endphp                
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $mapel->nama_mapel }}</td>
+                        <td>75</td>
+                        <td>{{ optional($rapot)->p_nilai ?? '-' }}</td>
+                        <td>{{ optional($rapot)->p_predikat ?? '-' }}</td>
+                        <td>{{ optional($rapot)->p_deskripsi ?? 'Deskripsi tidak tersedia' }}</td>
+                        <td>{{ optional($rapot)->k_nilai ?? '-' }}</td>
+                        <td>{{ optional($rapot)->k_predikat ?? '-' }}</td>
+                        <td>{{ optional($rapot)->k_deskripsi ?? 'Deskripsi tidak tersedia' }}</td>
+                    </tr>
                     @endforeach
-                    
-                    </tbody>
-                </table>
-            </div>
+                </tbody>
+            </table>
         </div>
         </div>
     </div>
 </div>
 @endsection
+
 @section('script')
-    <script> $("#RapotSiswa").addClass("active"); </script>
+    <script> $("#RapotSiswa").addClass("active"); </script> 
 @endsection

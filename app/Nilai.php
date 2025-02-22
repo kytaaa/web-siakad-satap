@@ -17,5 +17,6 @@ class Nilai extends Model
         return $this->belongsTo(Siswa::class, 'siswa_id');
     }
     
+    
     protected $table = 'nilai';
 }

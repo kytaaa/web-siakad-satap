@@ -165,14 +165,14 @@
                                     <p>Nilai Rapot</p>
                                 </a>
                             </li>
-           <li class="nav-item">
+           {{-- <li class="nav-item">
                                 <a href="{{ route('predikat') }}" class="nav-link" id="Deskripsi">
                                     <i class="fas fa-file-alt nav-icon"></i>
                                     <p>Deskripsi Predikat</p> 
                                 </a>
                             </li>
                         </ul>
-                    </li>
+                    </li> --}}
                     <li class="nav-item">
                         <a href="{{ route('admin.pengumuman') }}" class="nav-link" id="Pengumuman">
                             <i class="nav-icon fas fa-clipboard"></i>
@@ -228,14 +228,14 @@
                                     <p>Entry Nilai Rapot</p>
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a href="{{ route('nilai.index') }}" class="nav-link" id="DesGuru">
                                     <i class="fas fa-file-alt nav-icon"></i>
                                     <p>Deskripsi Predikat</p>
                                 </a>
                             </li>
                         </ul>
-                    </li>
+                    </li> --}}
                 @elseif (Auth::user()->role == 'Siswa' && Auth::user()->siswa(Auth::user()->no_induk))
                     <li class="nav-item has-treeview">
                         <a href="{{ url('/') }}" class="nav-link" id="Home">
