@@ -68,7 +68,7 @@
                   <select id="role" type="text" class="form-control @error('role') is-invalid @enderror select2bs4" name="role" value="{{ old('role') }}" autocomplete="role">
                     <option value="">-- Select {{ __('Level User') }} --</option>
                     <option value="Admin">Admin</option>
-                    <option value="Operator">Operator</option>
+                    {{-- <option value="Operator">Operator</option> --}}
                     <option value="Guru">Guru</option>
                     <option value="Siswa">Siswa</option>
                   </select>
