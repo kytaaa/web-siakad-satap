@@ -26,9 +26,9 @@
     </div>
 
     <footer style="color: white;">
-      <marquee>
+      {{-- <marquee>
           <strong>Copyright &copy; <script>document.write(new Date().getFullYear());</script> &diams; <a href="http://smmpnsatap1jatiagung.sch.id/" style="color: white;">SMPN Satap 1 Jati Agung </a>. </strong>
-      </marquee>
+      </marquee> --}}
     </footer>
   </div>
 
